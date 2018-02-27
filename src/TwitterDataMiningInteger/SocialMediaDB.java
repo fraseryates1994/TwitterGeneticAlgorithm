@@ -17,13 +17,16 @@ public class SocialMediaDB {
         wrapper.createStatement();
         int i = 0;
         int j = 0;
+
         try {
-            while (i < 20) {
+            while (i < dataSize) {
                 wrapper.createResultSet("SELECT * FROM " + tableName + " WHERE id=" + i);
                 wrapper.getResultSet().next();
+                
                 j = 0;
                 dataSet[i] = new Data();
-                dataSet[i].variables[j] = wrapper.getResultSet().getInt("followersCount");
+                dataSet[i].variables[j] = wrapper.getResultSet().getInt("contextId");
+                dataSet[i].variables[++j] = wrapper.getResultSet().getInt("followersCount");
                 dataSet[i].variables[++j] = wrapper.getResultSet().getInt("favouriteCount");
                 dataSet[i].variables[++j] = wrapper.getResultSet().getInt("friendCount");
                 dataSet[i].variables[++j] = wrapper.getResultSet().getInt("location");
@@ -35,6 +38,7 @@ public class SocialMediaDB {
                 dataSet[i].variables[++j] = wrapper.getResultSet().getInt("hasNegativeEmoji");
                 dataSet[i].output = wrapper.getResultSet().getInt("classifier");
                 i++;
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(SocialMediaDB.class.getName()).log(Level.SEVERE, null, ex);

@@ -6,7 +6,7 @@ package TwitterDataMiningInteger;
  * @author Fraser
  */
 public class Data {
-    public int variableSize = 10;
+    public int variableSize = 11;
     public int variables[];
     public int output;
 

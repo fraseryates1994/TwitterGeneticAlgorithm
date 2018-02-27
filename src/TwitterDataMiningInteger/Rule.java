@@ -6,7 +6,7 @@ package TwitterDataMiningInteger;
  */
 public class Rule {
 
-    public int conditionSize = 10;
+    public int conditionSize = 11;
     public int[] condition;
     public int output;
 

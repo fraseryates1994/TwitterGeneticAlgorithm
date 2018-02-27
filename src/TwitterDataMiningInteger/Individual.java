@@ -2,6 +2,7 @@
 package TwitterDataMiningInteger;
 
 
+import static TwitterDataMiningInteger.main.ruleSize;
 import java.util.Arrays;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Arrays;
  */
 public class Individual {
 
-    public int geneSize = 55; // rule size * (condition size + output size)
+    public int geneSize = ruleSize * (11 + 1); // rule size * (condition size + output size)
     int genes[];
     int fitness;
 
