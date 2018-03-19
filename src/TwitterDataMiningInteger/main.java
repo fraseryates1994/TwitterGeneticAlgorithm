@@ -17,7 +17,7 @@ public class main {
     public static int totalFitness = 0;
     public static int iteration = 1;
     public static int ruleSize = 5;
-    public static int dataSize = 150;
+    public static int dataSize = 200;
     public static int totalIterations = 1000;
     public static Individual bestIndividual = new Individual();
     public static Random rand = new Random();
@@ -58,30 +58,47 @@ public class main {
         System.out.println("Generation = " + (iteration - 1));
         System.out.println("Best Individual = " + bestIndividual);
         seperateRules(bestIndividual);
-        System.out.println(deCodeIndividual(bestIndividual));
+        String ruleBase = deCodeIndividual(bestIndividual);
+        System.out.println(ruleBase);
+        String fitness = bestIndividual.fitness + " / " + dataSize;
+
+        // Ask user for table/ txt file name
+        System.out.println("Would you like to write the results to the database? y/n");
+        String input = reader.next();
+        if (input.equals("y")) {
+            db.writeResults(new Results(ruleBase, mutationRate, populationSize, fitness));
+            System.out.println("Done");
+        }
     }
 
     public static String deCodeIndividual(Individual bestIndividual) {
         String out = "";
+        int i = 0;
         int j = 0;
+        int ruleNumber = 0;
 
-        for (int i = 0; j < ruleSize; i++) {
+        while (j < ruleSize) {
+            ruleNumber = j + 1;
+            out = out + "Rule " + ruleNumber + "\n";
+
             if (bestIndividual.genes[i] == 0) {
                 out = out + "If Donald Trump says witch hunt\n";
             } else if (bestIndividual.genes[i] == 1) {
                 out = out + "If Kim Kardashian says baby chicago\n";
             } else if (bestIndividual.genes[i] == 2) {
                 out = out + "If Jeremy Corbyn posts about meeting a prime minister\n";
+            } else if (bestIndividual.genes[i] == 3) {
+                out = out + "If Michael Eric Dyson on Trump\n";
             }
 
             if (bestIndividual.genes[++i] == 0) {
-                out = "If followers is in the range of 0 - 10\n";
+                out = out + "If followers is in the range of 0 - 10\n";
             } else if (bestIndividual.genes[i] == 1) {
                 out = out + "If followers is in the range of 11 - 100\n";
             } else if (bestIndividual.genes[i] == 2) {
                 out = out + "If followers is in the range of 101 - 300\n";
             } else if (bestIndividual.genes[i] == 3) {
-                out = out + "If followers is 300\n";
+                out = out + "If followers is 300+\n";
             }
 
             if (bestIndividual.genes[++i] == 0) {
@@ -97,10 +114,10 @@ public class main {
             } else if (bestIndividual.genes[i] == 2) {
                 out = out + "If friends is in the range of 100 - 300\n";
             } else if (bestIndividual.genes[i] == 3) {
-                out = out + "If friends is 300\n";
-            } 
-            
-             if (bestIndividual.genes[++i] == 0) {
+                out = out + "If friends is 300+\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
                 out = out + "If location is in Africa\n";
             } else if (bestIndividual.genes[i] == 1) {
                 out = out + "If location is in Asia\n";
@@ -157,8 +174,9 @@ public class main {
             } else if (bestIndividual.genes[i] == 2) {
                 out = out + "THEN comment is positive\n";
             }
-            
+
             j++;
+            i++;
         }
         return out;
     }
