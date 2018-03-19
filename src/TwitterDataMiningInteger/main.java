@@ -11,14 +11,14 @@ import java.util.Scanner;
  */
 public class main {
 
-    public static int populationSize = 100;
+    public static int populationSize = 500;
     public static double mutationRate = 0.001;
     public static double crossoverRate = 0.7;
     public static int totalFitness = 0;
     public static int iteration = 1;
-    public static int ruleSize = 3;
-    public static int dataSize = 100;
-    public static int totalIterations = 10000;
+    public static int ruleSize = 5;
+    public static int dataSize = 150;
+    public static int totalIterations = 1000;
     public static Individual bestIndividual = new Individual();
     public static Random rand = new Random();
     private static Scanner reader = new Scanner(System.in);  // Reading from System.in
@@ -27,10 +27,9 @@ public class main {
         Individual population[] = new Individual[populationSize];
         Data dataSet[] = new Data[dataSize];
 
-        // Ask user for table name/ txt file name
+        // Ask user for table name/ txt file name and read data in dataSet
         System.out.println("Enter the table you would like to read from:");
         String fileName = reader.next();
-
         JDBCWrapper wr = new JDBCWrapper("org.apache.derby.jdbc.ClientDriver", "jdbc:derby://localhost:1527/SocialMedia", "social", "fraz");
         SocialMediaDB db = new SocialMediaDB(wr);
         dataSet = db.getTwitterData(fileName, dataSize);
@@ -52,12 +51,116 @@ public class main {
             setFittest(getFittest(population)); // Print most fit 
             System.out.println("Generation " + iteration + ". Fittest gene = " + getFittest(population).fitness);
             //System.out.println(getFittest(population).fitness);
+
             iteration++;
         }
         // Print when solution has been found
         System.out.println("Generation = " + (iteration - 1));
         System.out.println("Best Individual = " + bestIndividual);
         seperateRules(bestIndividual);
+        System.out.println(deCodeIndividual(bestIndividual));
+    }
+
+    public static String deCodeIndividual(Individual bestIndividual) {
+        String out = "";
+        int j = 0;
+
+        for (int i = 0; j < ruleSize; i++) {
+            if (bestIndividual.genes[i] == 0) {
+                out = out + "If Donald Trump says witch hunt\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If Kim Kardashian says baby chicago\n";
+            } else if (bestIndividual.genes[i] == 2) {
+                out = out + "If Jeremy Corbyn posts about meeting a prime minister\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = "If followers is in the range of 0 - 10\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If followers is in the range of 11 - 100\n";
+            } else if (bestIndividual.genes[i] == 2) {
+                out = out + "If followers is in the range of 101 - 300\n";
+            } else if (bestIndividual.genes[i] == 3) {
+                out = out + "If followers is 300\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = out + "If reply is not favourited\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If reply is favourited\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = out + "If friends is in the range of 0 - 10\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If friends is in the range of 10 - 100\n";
+            } else if (bestIndividual.genes[i] == 2) {
+                out = out + "If friends is in the range of 100 - 300\n";
+            } else if (bestIndividual.genes[i] == 3) {
+                out = out + "If friends is 300\n";
+            } 
+            
+             if (bestIndividual.genes[++i] == 0) {
+                out = out + "If location is in Africa\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If location is in Asia\n";
+            } else if (bestIndividual.genes[i] == 2) {
+                out = out + "If location is in Oceania\n";
+            } else if (bestIndividual.genes[i] == 3) {
+                out = out + "If location is in Europe\n";
+            } else if (bestIndividual.genes[i] == 4) {
+                out = out + "If location is in North America\n";
+            } else if (bestIndividual.genes[i] == 5) {
+                out = out + "If location is in South America\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = out + "If user is not verified\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If user is verified\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = out + "If comment does not contains a swear word\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If comment contains a swear word\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = out + "If comment does not contain a positive word\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If comment contains a positive word\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = out + "If comment does not contain a negative word\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If comment contains a negative word\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = out + "If comment does not contain a positive emoji\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If comment contains a positive emoji\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = out + "If comment does not contain a negative emoji\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "If comment contains a negative emoji\n";
+            }
+
+            if (bestIndividual.genes[++i] == 0) {
+                out = out + "THEN comment is negative\n";
+            } else if (bestIndividual.genes[i] == 1) {
+                out = out + "THEN comment is neutral\n";
+            } else if (bestIndividual.genes[i] == 2) {
+                out = out + "THEN comment is positive\n";
+            }
+            
+            j++;
+        }
+        return out;
     }
 
     public static void setFittest(Individual individual) {
@@ -259,33 +362,67 @@ public class main {
         //mutation
         for (int i = 0; i != populationSize; ++i) {
             for (int j = 0; j != population[i].geneSize; ++j) {
-                if (isFirstCondition(j, population)) {
+                if (isFirstCondition(j, population)) { // context ID 0-3
                     switch (population[i].genes[j]) {
                         case 0:
-                            if (Math.random() < 0.5) {
+                            if (Math.random() < 0.25) {
                                 population[i].genes[j] = 1;
+                            } else if (Math.random() < 0.5) {
+                                population[i].genes[j] = 2;
+                            } else if (Math.random() < 0.75) {
+                                population[i].genes[j] = 3;
                             } else {
                                 population[i].genes[j] = 9;
                             }
                             break;
                         case 1:
-                            if (Math.random() < 0.5) {
+                            if (Math.random() < 0.25) {
                                 population[i].genes[j] = 0;
+                            } else if (Math.random() < 0.5) {
+                                population[i].genes[j] = 2;
+                            } else if (Math.random() < 0.75) {
+                                population[i].genes[j] = 3;
+                            } else {
+                                population[i].genes[j] = 9;
+                            }
+                            break;
+                        case 2:
+                            if (Math.random() < 0.25) {
+                                population[i].genes[j] = 0;
+                            } else if (Math.random() < 0.5) {
+                                population[i].genes[j] = 1;
+                            } else if (Math.random() < 0.75) {
+                                population[i].genes[j] = 3;
+                            } else {
+                                population[i].genes[j] = 9;
+                            }
+                            break;
+                        case 3:
+                            if (Math.random() < 0.25) {
+                                population[i].genes[j] = 0;
+                            } else if (Math.random() < 0.5) {
+                                population[i].genes[j] = 1;
+                            } else if (Math.random() < 0.75) {
+                                population[i].genes[j] = 2;
                             } else {
                                 population[i].genes[j] = 9;
                             }
                             break;
                         case 9:
-                            if (Math.random() < 0.5) {
+                            if (Math.random() < 0.25) {
                                 population[i].genes[j] = 0;
-                            } else {
+                            } else if (Math.random() < 0.5) {
                                 population[i].genes[j] = 1;
+                            } else if (Math.random() < 0.75) {
+                                population[i].genes[j] = 2;
+                            } else {
+                                population[i].genes[j] = 3;
                             }
                             break;
                         default:
                             break;
                     }
-                } else if (isSecondCondition(j, population)) { // first condition 0-3
+                } else if (isSecondCondition(j, population)) { // Followers Count 0-3
                     if (rand.nextFloat() <= mutationRate) {
                         switch (population[i].genes[j]) {
                             case 0:
@@ -347,7 +484,7 @@ public class main {
                                 break;
                         }
                     }
-                } else if (isThirdCondition(j, population)) { // Mutate 3rd condition 0-1                 
+                } else if (isThirdCondition(j, population)) { // Favourite Count 0-1                
                     if (rand.nextFloat() <= mutationRate) {
                         switch (population[i].genes[j]) {
                             case 0:
@@ -375,7 +512,7 @@ public class main {
                                 break;
                         }
                     }
-                } else if (isFourthCondition(j, population)) { // Mutate 4th condition 0-3
+                } else if (isFourthCondition(j, population)) { // Friend Count 0-3
                     if (rand.nextFloat() <= mutationRate) {
                         switch (population[i].genes[j]) {
                             case 0:
@@ -437,7 +574,7 @@ public class main {
                                 break;
                         }
                     }
-                } else if (isFifthCondition(j, population)) { // Matches 5th condition 0-4
+                } else if (isFifthCondition(j, population)) { // location 0-4
                     if (rand.nextFloat() <= mutationRate) {
                         switch (population[i].genes[j]) {
                             case 0:
@@ -522,7 +659,7 @@ public class main {
                                 break;
                         }
                     }
-                } else if (isLastConditions(j, population)) { // Mutate 6th - 11                
+                } else if (isLastConditions(j, population)) { // Mutate 6th - 11    0-1            
                     if (rand.nextFloat() <= mutationRate) {
                         switch (population[i].genes[j]) {
                             case 0:
@@ -550,7 +687,7 @@ public class main {
                                 break;
                         }
                     }
-                } else if (isOutput(j, population)) {
+                } else if (isOutput(j, population)) { // classifier 0-2
                     if (population[i].genes[j] == 9) {
                         if (rand.nextFloat() <= mutationRate) {
                             population[i].genes[j] = 0;
@@ -589,342 +726,6 @@ public class main {
             }
         }
     }
-
-//    public static void mutateContextOutput(Individual[] population) {
-//        Rule rule = new Rule();
-//        //mutation
-//        for (int i = 0; i != populationSize; ++i) {
-//            for (int j = 0; j != population[i].geneSize; ++j) {
-//                if (isOutput(j)) {
-//                    switch (population[i].genes[j]) {
-//                        case 0:
-//                            if (Math.random() < 0.5) {
-//                                population[i].genes[j] = 1;
-//                            } else {
-//                                population[i].genes[j] = 9;
-//                            }
-//                            break;
-//                        case 1:
-//                            if (Math.random() < 0.5) {
-//                                population[i].genes[j] = 0;
-//                            } else {
-//                                population[i].genes[j] = 9;
-//                            }
-//                            break;
-//                        case 9:
-//                            if (Math.random() < 0.5) {
-//                                population[i].genes[j] = 0;
-//                            } else {
-//                                population[i].genes[j] = 1;
-//                            }
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//                } else if (isSecondCondition(j)) { // first condition 0-3
-//                    if (rand.nextFloat() <= mutationRate) {
-//                        switch (population[i].genes[j]) {
-//                            case 0:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 2;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 3;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 1:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 2;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 3;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 2:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 3;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 3:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 2;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 9:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 2;
-//                                } else {
-//                                    population[i].genes[j] = 3;
-//                                }
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                    }
-//                } else if (isThirdCondition(j)) { // Mutate 3rd condition 0-1                 
-//                    if (rand.nextFloat() <= mutationRate) {
-//                        switch (population[i].genes[j]) {
-//                            case 0:
-//                                if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 1;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 1:
-//                                if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 0;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 9:
-//                                if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 0;
-//                                } else {
-//                                    population[i].genes[j] = 1;
-//                                }
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                    }
-//                } else if (isFourthCondition(j)) { // Mutate 4th condition 0-3
-//                    if (rand.nextFloat() <= mutationRate) {
-//                        switch (population[i].genes[j]) {
-//                            case 0:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 2;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 3;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 1:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 2;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 3;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 2:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 3;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 3:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 2;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 9:
-//                                if (Math.random() < 0.25) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.75) {
-//                                    population[i].genes[j] = 2;
-//                                } else {
-//                                    population[i].genes[j] = 3;
-//                                }
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                    }
-//                } else if (isFifthCondition(j)) { // Matches 5th condition 0-4
-//                    if (rand.nextFloat() <= mutationRate) {
-//                        switch (population[i].genes[j]) {
-//                            case 0:
-//                                if (Math.random() < 0.2) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.4) {
-//                                    population[i].genes[j] = 2;
-//                                } else if (Math.random() < 0.6) {
-//                                    population[i].genes[j] = 3;
-//                                } else if (Math.random() < 0.8) {
-//                                    population[i].genes[j] = 4;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 1:
-//                                if (Math.random() < 0.2) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.4) {
-//                                    population[i].genes[j] = 2;
-//                                } else if (Math.random() < 0.6) {
-//                                    population[i].genes[j] = 3;
-//                                } else if (Math.random() < 0.8) {
-//                                    population[i].genes[j] = 4;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 2:
-//                                if (Math.random() < 0.2) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.4) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.6) {
-//                                    population[i].genes[j] = 3;
-//                                } else if (Math.random() < 0.8) {
-//                                    population[i].genes[j] = 4;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 3:
-//                                if (Math.random() < 0.2) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.4) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.6) {
-//                                    population[i].genes[j] = 2;
-//                                } else if (Math.random() < 0.8) {
-//                                    population[i].genes[j] = 4;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 4:
-//                                if (Math.random() < 0.2) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.4) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.6) {
-//                                    population[i].genes[j] = 2;
-//                                } else if (Math.random() < 0.8) {
-//                                    population[i].genes[j] = 3;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 9:
-//                                if (Math.random() < 0.2) {
-//                                    population[i].genes[j] = 0;
-//                                } else if (Math.random() < 0.4) {
-//                                    population[i].genes[j] = 1;
-//                                } else if (Math.random() < 0.6) {
-//                                    population[i].genes[j] = 2;
-//                                } else if (Math.random() < 0.8) {
-//                                    population[i].genes[j] = 3;
-//                                } else {
-//                                    population[i].genes[j] = 4;
-//                                }
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                    }
-//                } else if (isLastConditions(j)) { // Mutate 6th - 11                
-//                    if (rand.nextFloat() <= mutationRate) {
-//                        switch (population[i].genes[j]) {
-//                            case 0:
-//                                if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 1;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 1:
-//                                if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 0;
-//                                } else {
-//                                    population[i].genes[j] = 9;
-//                                }
-//                                break;
-//                            case 9:
-//                                if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 0;
-//                                } else {
-//                                    population[i].genes[j] = 1;
-//                                }
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                    }
-//                } else if (isFirstCondition(j)) {
-//                    if (population[i].genes[j] == 9) {
-//                        if (rand.nextFloat() <= mutationRate) {
-//                            population[i].genes[j] = 0;
-//                        } else {
-//                            population[i].genes[j] = 1;
-//                        }
-//                    }
-//                    if (rand.nextFloat() <= mutationRate) {
-//                        switch (population[i].genes[j]) {
-//                            case 0:
-//                                if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 1;
-//                                } else {
-//                                    population[i].genes[j] = 2;
-//                                }
-//                                break;
-//                            case 1:
-//                                if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 0;
-//                                } else {
-//                                    population[i].genes[j] = 2;
-//                                }
-//                                break;
-//                            case 2:
-//                                if (Math.random() < 0.5) {
-//                                    population[i].genes[j] = 0;
-//                                } else {
-//                                    population[i].genes[j] = 1;
-//                                }
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     public static void crossover(Individual population[]) {
         for (int i = 0; i < populationSize; i = i + 2) {
