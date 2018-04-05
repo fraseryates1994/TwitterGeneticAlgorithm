@@ -31,13 +31,16 @@ public class main {
         Individual population[] = new Individual[populationSize];
         Data dataSet[] = new Data[dataSize];
 
+        int validationFitness[] = new int[totalIterations];
+
         // Ask user for table name/ txt file name and read data in dataSet
         System.out.println("Enter the table you would like to read from:");
         String fileName = reader.next();
         JDBCWrapper wr = new JDBCWrapper("org.apache.derby.jdbc.ClientDriver", "jdbc:derby://localhost:1527/SocialMedia", "social", "fraz");
         SocialMediaDB db = new SocialMediaDB(wr);
         dataSet = db.getTwitterData(fileName, dataSize);
-        // printData(dataSet);
+//        Data[] trainingSet = getTrainingSet(dataSet);
+//        Data[] validationSet = getValidationSet(dataSet);
 
         initiate(population);
         evaluateFitness(population, dataSet, populationSize, ruleSize);
@@ -52,13 +55,25 @@ public class main {
             mutate(population, populationSize, mutationRate);
             evaluateFitness(population, dataSet, populationSize, ruleSize);
 
-            setFittest(getFittest(population)); // Print most fit 
-            // System.out.println("Generation " + iteration + ". Fittest gene = " + getFittest(population).fitness);
-            System.out.println(getFittest(population).fitness);
+            Individual fittest = getFittest(population);
+            setFittest(fittest);
+            Individual toValidate = clone(fittest);
+            evaluateIndFitness(toValidate, dataSet, ruleSize / 2);
+            validationFitness[iteration] = toValidate.fitness;
+
+            System.out.println("Generation " + iteration + ". Fittest gene = " + getFittest(population).fitness);
+            //System.out.println(getFittest(population).fitness);
+//            System.out.println("Training Data  : Generation " + iteration + ". Fittest gene = " + fittest.fitness
+//                    + "\nValidation Data: Generation " + iteration + ". fittest gene = " + toValidate.fitness);
+//            System.out.println(toValidate.fitness);
 
             iteration++;
         }
         
+//        for (int v : validationFitness) {
+//            System.out.println(v);
+//        }
+
         // Print when solution has been found
         System.out.println("Generation = " + (iteration - 1));
         System.out.println("Best Individual = " + bestIndividual);
@@ -74,6 +89,64 @@ public class main {
             db.writeResults(new Results(ruleBase, mutationRate, populationSize, fitness));
             System.out.println("Done");
         }
+    }
+
+    public static Data[] getTrainingSet(Data[] dataSet) {
+        Data[] trainingSet1 = Arrays.copyOfRange(dataSet, 0, 25);
+        Data[] trainingSet2 = Arrays.copyOfRange(dataSet, 50, 75);
+        Data[] trainingSet3 = Arrays.copyOfRange(dataSet, 100, 125);
+        Data[] trainingSet4 = Arrays.copyOfRange(dataSet, 150, 175);
+        Data[] trainingSet5 = Arrays.copyOfRange(dataSet, 200, 225);
+        Data[] trainingSet6 = Arrays.copyOfRange(dataSet, 250, 275);
+        Data[] trainingSet7 = Arrays.copyOfRange(dataSet, 300, 325);
+        Data[] trainingSet8 = Arrays.copyOfRange(dataSet, 350, 375);
+        Data[] trainingSet9 = Arrays.copyOfRange(dataSet, 400, 425);
+
+        Data[] test = combine(trainingSet1, trainingSet2);
+        Data[] test2 = combine(trainingSet3, trainingSet4);
+        Data[] test3 = combine(trainingSet5, trainingSet6);
+        Data[] test4 = combine(trainingSet7, trainingSet8);
+
+        Data[] test5 = combine(test, test2);
+        Data[] test6 = combine(test3, test4);
+        Data[] test7 = combine(test6, trainingSet9);
+
+        Data[] ret = combine(test5, test7);
+
+        return ret;
+    }
+
+    public static Data[] getValidationSet(Data[] dataSet) {
+        Data[] trainingSet1 = Arrays.copyOfRange(dataSet, 25, 50);
+        Data[] trainingSet2 = Arrays.copyOfRange(dataSet, 75, 100);
+        Data[] trainingSet3 = Arrays.copyOfRange(dataSet, 125, 150);
+        Data[] trainingSet4 = Arrays.copyOfRange(dataSet, 175, 200);
+        Data[] trainingSet5 = Arrays.copyOfRange(dataSet, 225, 250);
+        Data[] trainingSet6 = Arrays.copyOfRange(dataSet, 275, 300);
+        Data[] trainingSet7 = Arrays.copyOfRange(dataSet, 325, 350);
+        Data[] trainingSet8 = Arrays.copyOfRange(dataSet, 375, 400);
+        Data[] trainingSet9 = Arrays.copyOfRange(dataSet, 425, 450);
+
+        Data[] test = combine(trainingSet1, trainingSet2);
+        Data[] test2 = combine(trainingSet3, trainingSet4);
+        Data[] test3 = combine(trainingSet5, trainingSet6);
+        Data[] test4 = combine(trainingSet7, trainingSet8);
+
+        Data[] test5 = combine(test, test2);
+        Data[] test6 = combine(test3, test4);
+        Data[] test7 = combine(test6, trainingSet9);
+
+        Data[] ret = combine(test5, test7);
+
+        return ret;
+    }
+
+    public static Data[] combine(Data[] a, Data[] b) {
+        int length = a.length + b.length;
+        Data[] result = new Data[length];
+        System.arraycopy(a, 0, result, 0, a.length);
+        System.arraycopy(b, 0, result, a.length, b.length);
+        return result;
     }
 
     // fitness evaluation
@@ -109,6 +182,18 @@ public class main {
         return false;
     }
 
+    public static Individual clone(Individual individualToCopy) {
+        int[] temp = new int[individualToCopy.geneSize];
+        Individual twin = new Individual();
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = individualToCopy.genes[i];
+            twin.genes[i] = temp[i];
+        }
+        twin.fitness = individualToCopy.fitness;
+
+        return twin;
+    }
+
     public static void seperateRules(Individual[] population) {
         Individual fittest = getFittest(population);
         for (int i = 0; i != fittest.geneSize; i += 6) {
@@ -132,7 +217,7 @@ public class main {
     public static void printData(Data[] data) {
         for (Data data1 : data) {
             for (int i = 0; i < data1.variableSize; i++) {
-                System.out.print(data1.variables[i]);
+                System.out.print(data1.variables[i] + ", ");
             }
             System.out.print(data1.output);
             System.out.println("");
