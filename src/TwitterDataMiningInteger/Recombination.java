@@ -92,62 +92,217 @@ public class Recombination {
         //mutation
         for (int i = 0; i != populationSize; ++i) {
             for (int j = 0; j != population[i].geneSize; ++j) {
-                if (isFirstCondition(j, population)) { // context ID 0-3
+                if (isFirstCondition(j, population)) { // context ID 0-9
                     if (rand.nextFloat() <= mutationRate) {
                         switch (population[i].genes[j]) {
                             case 0:
-                                if (Math.random() < 0.25) {
+                                if (Math.random() < 0.11) {
                                     population[i].genes[j] = 1;
-                                } else if (Math.random() < 0.5) {
+                                } else if (Math.random() < 0.22) {
                                     population[i].genes[j] = 2;
-                                } else if (Math.random() < 0.75) {
+                                } else if (Math.random() < 0.33) {
                                     population[i].genes[j] = 3;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 4;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 5;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 6;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 7;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 8;
                                 } else {
                                     population[i].genes[j] = 9;
                                 }
                                 break;
                             case 1:
-                                if (Math.random() < 0.25) {
+                                if (Math.random() < 0.11) {
                                     population[i].genes[j] = 0;
-                                } else if (Math.random() < 0.5) {
+                                } else if (Math.random() < 0.22) {
                                     population[i].genes[j] = 2;
-                                } else if (Math.random() < 0.75) {
+                                } else if (Math.random() < 0.33) {
                                     population[i].genes[j] = 3;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 4;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 5;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 6;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 7;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 8;
                                 } else {
                                     population[i].genes[j] = 9;
                                 }
                                 break;
                             case 2:
-                                if (Math.random() < 0.25) {
-                                    population[i].genes[j] = 0;
-                                } else if (Math.random() < 0.5) {
+                                if (Math.random() < 0.11) {
                                     population[i].genes[j] = 1;
-                                } else if (Math.random() < 0.75) {
+                                } else if (Math.random() < 0.22) {
+                                    population[i].genes[j] = 0;
+                                } else if (Math.random() < 0.33) {
                                     population[i].genes[j] = 3;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 4;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 5;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 6;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 7;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 8;
                                 } else {
                                     population[i].genes[j] = 9;
                                 }
                                 break;
                             case 3:
-                                if (Math.random() < 0.25) {
-                                    population[i].genes[j] = 0;
-                                } else if (Math.random() < 0.5) {
+                                if (Math.random() < 0.11) {
                                     population[i].genes[j] = 1;
-                                } else if (Math.random() < 0.75) {
+                                } else if (Math.random() < 0.22) {
                                     population[i].genes[j] = 2;
+                                } else if (Math.random() < 0.33) {
+                                    population[i].genes[j] = 0;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 4;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 5;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 6;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 7;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 8;
+                                } else {
+                                    population[i].genes[j] = 9;
+                                }
+                                break;
+                            case 4:
+                                if (Math.random() < 0.11) {
+                                    population[i].genes[j] = 1;
+                                } else if (Math.random() < 0.22) {
+                                    population[i].genes[j] = 2;
+                                } else if (Math.random() < 0.33) {
+                                    population[i].genes[j] = 3;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 0;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 5;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 6;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 7;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 8;
+                                } else {
+                                    population[i].genes[j] = 9;
+                                }
+                                break;
+                            case 5:
+                                if (Math.random() < 0.11) {
+                                    population[i].genes[j] = 1;
+                                } else if (Math.random() < 0.22) {
+                                    population[i].genes[j] = 2;
+                                } else if (Math.random() < 0.33) {
+                                    population[i].genes[j] = 3;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 4;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 0;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 6;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 7;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 8;
+                                } else {
+                                    population[i].genes[j] = 9;
+                                }
+                                break;
+                            case 6:
+                                if (Math.random() < 0.11) {
+                                    population[i].genes[j] = 1;
+                                } else if (Math.random() < 0.22) {
+                                    population[i].genes[j] = 2;
+                                } else if (Math.random() < 0.33) {
+                                    population[i].genes[j] = 3;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 4;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 5;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 0;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 7;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 8;
+                                } else {
+                                    population[i].genes[j] = 9;
+                                }
+                                break;
+                            case 7:
+                                if (Math.random() < 0.11) {
+                                    population[i].genes[j] = 1;
+                                } else if (Math.random() < 0.22) {
+                                    population[i].genes[j] = 2;
+                                } else if (Math.random() < 0.33) {
+                                    population[i].genes[j] = 3;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 4;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 5;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 6;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 0;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 8;
+                                } else {
+                                    population[i].genes[j] = 9;
+                                }
+                                break;
+                            case 8:
+                                if (Math.random() < 0.11) {
+                                    population[i].genes[j] = 1;
+                                } else if (Math.random() < 0.22) {
+                                    population[i].genes[j] = 2;
+                                } else if (Math.random() < 0.33) {
+                                    population[i].genes[j] = 3;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 4;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 5;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 6;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 7;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 0;
                                 } else {
                                     population[i].genes[j] = 9;
                                 }
                                 break;
                             case 9:
-                                if (Math.random() < 0.25) {
-                                    population[i].genes[j] = 0;
-                                } else if (Math.random() < 0.5) {
+                                if (Math.random() < 0.11) {
                                     population[i].genes[j] = 1;
-                                } else if (Math.random() < 0.75) {
+                                } else if (Math.random() < 0.22) {
                                     population[i].genes[j] = 2;
-                                } else {
+                                } else if (Math.random() < 0.33) {
                                     population[i].genes[j] = 3;
+                                } else if (Math.random() < 0.44) {
+                                    population[i].genes[j] = 4;
+                                } else if (Math.random() < 0.55) {
+                                    population[i].genes[j] = 5;
+                                } else if (Math.random() < 0.66) {
+                                    population[i].genes[j] = 6;
+                                } else if (Math.random() < 0.77) {
+                                    population[i].genes[j] = 7;
+                                } else if (Math.random() < 0.88) {
+                                    population[i].genes[j] = 8;
+                                } else {
+                                    population[i].genes[j] = 0;
                                 }
                                 break;
                             default:

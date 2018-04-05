@@ -16,12 +16,12 @@ import java.util.Scanner;
 public class main {
 
     public static int populationSize = 500;
-    public static double mutationRate = 0.001;
+    public static double mutationRate = 0.002;
     public static double crossoverRate = 0.7;
     public static int totalFitness = 0;
     public static int iteration = 1;
-    public static int ruleSize = 5;
-    public static int dataSize = 200;
+    public static int ruleSize = 10;
+    public static int dataSize = 450;
     public static int totalIterations = 10000;
     public static Individual bestIndividual = new Individual();
     public static Random rand = new Random();
@@ -37,11 +37,11 @@ public class main {
         JDBCWrapper wr = new JDBCWrapper("org.apache.derby.jdbc.ClientDriver", "jdbc:derby://localhost:1527/SocialMedia", "social", "fraz");
         SocialMediaDB db = new SocialMediaDB(wr);
         dataSet = db.getTwitterData(fileName, dataSize);
-        printData(dataSet);
+        // printData(dataSet);
 
         initiate(population);
         evaluateFitness(population, dataSet, populationSize, ruleSize);
-        printGenes(population);
+        // printGenes(population);
 
         while (iteration < totalIterations) {
             if (solutionFound(population)) {
@@ -53,8 +53,8 @@ public class main {
             evaluateFitness(population, dataSet, populationSize, ruleSize);
 
             setFittest(getFittest(population)); // Print most fit 
-            System.out.println("Generation " + iteration + ". Fittest gene = " + getFittest(population).fitness);
-            //System.out.println(getFittest(population).fitness);
+            // System.out.println("Generation " + iteration + ". Fittest gene = " + getFittest(population).fitness);
+            System.out.println(getFittest(population).fitness);
 
             iteration++;
         }

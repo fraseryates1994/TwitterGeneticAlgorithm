@@ -17,14 +17,24 @@ public class DecodeIndividual {
             out = out + "Rule " + ruleNumber + "\n";
 
             if (bestIndividual.genes[i] == 0) {
-                out = out + "If Donald Trump says witch hunt\n";
+                out = out + "If Donald Trump says there's a witch hunt against him\n";
             } else if (bestIndividual.genes[i] == 1) {
-                out = out + "If Kim Kardashian says baby chicago\n";
+                out = out + "If Kim Kardashian posts about her new baby Chicago\n";
             } else if (bestIndividual.genes[i] == 2) {
-                out = out + "If Jeremy Corbyn posts about meeting a prime minister\n";
+                out = out + "If Jeremy Corbyn posts about meeting the prime minister of Macedonia\n";
             } else if (bestIndividual.genes[i] == 3) {
-                out = out + "If Michael Eric Dyson on Trump\n";
-            }
+                out = out + "If Michael Eric Dyson says Obama was a better president than Trump\n";
+            } else if (bestIndividual.genes[i] == 4) {
+                out = out + "If Dwyane Wade posts about a fan of his that died in a school shooting\n";
+            } else if (bestIndividual.genes[i] == 5) {
+                out = out + "If Stranger Things posts about a tour of theres\n";
+            } else if (bestIndividual.genes[i] == 6) {
+                out = out + "If Vadim Lavrusik posts about being involved in a school shooting\n";
+            } else if (bestIndividual.genes[i] == 7) {
+                out = out + "If Arctic Monkeys post about their new album\n";
+            } else if (bestIndividual.genes[i] == 8) {
+                out = out + "If Fortnite post about an update for their game\n";
+            } 
 
             if (bestIndividual.genes[++i] == 0) {
                 out = out + "If followers is in the range of 0 - 10\n";
