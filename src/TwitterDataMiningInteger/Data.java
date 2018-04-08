@@ -1,6 +1,8 @@
 
 package TwitterDataMiningInteger;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Fraser
@@ -17,7 +19,7 @@ public class Data {
 
     @Override
     public String toString() {
-        return "Data{" + "variableSize=" + variableSize + ", variables=" + variables + ", output=" + output + '}';
+        return "Data{" + "variableSize=" + variableSize + ", variables=" + Arrays.toString(variables) + ", output=" + output + '}';
     }
     
     

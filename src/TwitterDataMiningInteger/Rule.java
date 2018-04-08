@@ -1,5 +1,7 @@
 package TwitterDataMiningInteger;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Fraser
@@ -17,7 +19,7 @@ public class Rule {
 
     @Override
     public String toString() {
-        return "Rule{" + "conditionSize=" + conditionSize + ", condition=" + condition + ", output=" + output + '}';
+        return "Rule{" + "conditionSize=" + conditionSize + ", condition=" + Arrays.toString(condition) + ", output=" + output + '}';
     }
     
     
