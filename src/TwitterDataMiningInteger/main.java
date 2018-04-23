@@ -22,7 +22,7 @@ public class main {
     public static int iteration = 1;
     public static int ruleSize = 10;
     public static int dataSize = 450;
-    public static int totalIterations = 10000;
+    public static int totalIterations = 1000;
     public static Individual bestIndividual = new Individual();
     public static Random rand = new Random();
     private static Scanner reader = new Scanner(System.in);  // Reading from System.in
@@ -39,12 +39,15 @@ public class main {
         JDBCWrapper wr = new JDBCWrapper("org.apache.derby.jdbc.ClientDriver", "jdbc:derby://localhost:1527/SocialMedia", "social", "fraz");
         SocialMediaDB db = new SocialMediaDB(wr);
         dataSet = db.getTwitterData(fileName, dataSize);
+        System.out.print("Training data set:\n");
+        printData(dataSet);
 //        Data[] trainingSet = getTrainingSet(dataSet);
 //        Data[] validationSet = getValidationSet(dataSet);
 
         initiate(population);
         evaluateFitness(population, dataSet, populationSize, ruleSize);
-        // printGenes(population);
+        System.out.print("Initial random population:\n");
+        printGenes(population);
 
         while (iteration < totalIterations) {
             if (solutionFound(population)) {
@@ -57,9 +60,9 @@ public class main {
 
             Individual fittest = getFittest(population);
             setFittest(fittest);
-            Individual toValidate = clone(fittest);
-            evaluateIndFitness(toValidate, dataSet, ruleSize / 2);
-            validationFitness[iteration] = toValidate.fitness;
+//            Individual toValidate = clone(fittest);
+//            evaluateIndFitness(toValidate, dataSet, ruleSize/ 2);
+//            validationFitness[iteration] = toValidate.fitness;
 
             System.out.println("Generation " + iteration + ". Fittest gene = " + getFittest(population).fitness);
             //System.out.println(getFittest(population).fitness);

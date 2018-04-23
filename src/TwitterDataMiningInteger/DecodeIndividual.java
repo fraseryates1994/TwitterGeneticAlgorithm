@@ -17,7 +17,7 @@ public class DecodeIndividual {
             out = out + "Rule " + ruleNumber + "\n";
 
             if (bestIndividual.genes[i] == 0) {
-                out = out + "If Donald Trump says there\'s a witch hunt against him\n";
+                out = out + "If Donald Trump says theres a witch hunt against him\n";
             } else if (bestIndividual.genes[i] == 1) {
                 out = out + "If Kim Kardashian posts about her new baby Chicago\n";
             } else if (bestIndividual.genes[i] == 2) {
